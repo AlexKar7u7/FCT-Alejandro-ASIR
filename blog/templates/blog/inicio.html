@@ -1,11 +1,33 @@
+{% load static %}
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Página principal</title>
+  <meta charset="utf-8">
+  <title>{% block title %}Mi sitio{% endblock %}</title>
 </head>
 <body>
-    <h1>Bienvenido a mi sitio web</h1>
-    <p>Esta es la página principal.</p>
-    <a href="/articulos/">Ver artículos</a>
+  <header>
+    <nav>
+      <a href="{% url 'inicio' %}">Inicio</a> |
+      <a href="{% url 'lista_articulos' %}">Artículos</a> |
+      {% if user.is_authenticated %}
+        Hola, {{ user.username }} |
+        <form action="{% url 'logout' %}" method="post" style="display:inline;">
+            {% csrf_token %}
+            <button type="submit">Cerrar sesión</button>
+        </form>
+
+        {% if user.is_staff %}
+          | <a href="/admin/">Ir al Admin</a>
+        {% endif %}
+      {% else %}
+        <a href="{% url 'login' %}">Iniciar sesión</a>
+      {% endif %}
+    </nav>
+  </header>
+
+  <main>
+    {% block content %}{% endblock %}
+  </main>
 </body>
 </html>
