@@ -1,0 +1,76 @@
+/* Fondo general */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #ecf0f1;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+/* Contenedor del formulario */
+.login-container {
+    background-color: white;
+    padding: 30px 40px;
+    border-radius: 12px;
+    box-shadow: 0px 4px 15px rgba(0,0,0,0.2);
+    width: 350px;
+    text-align: center;
+}
+
+/* Título */
+.login-container h1 {
+    margin-bottom: 20px;
+    color: #2c3e50;
+}
+
+/* Inputs */
+.login-container input[type="text"],
+.login-container input[type="password"] {
+    width: 100%;
+    padding: 12px;
+    margin: 8px 0 15px 0;
+    border: 1px solid #bdc3c7;
+    border-radius: 8px;
+    box-sizing: border-box;
+    font-size: 1em;
+}
+
+/* Botón */
+.login-container button {
+    width: 100%;
+    padding: 12px;
+    background-color: #1abc9c;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 1em;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.login-container button:hover {
+    background-color: #16a085;
+}
+
+/* Error de login */
+.login-container p.error {
+    color: #e74c3c;
+    font-weight: bold;
+    margin-bottom: 15px;
+}
+
+/* Link de volver */
+.login-container a {
+    display: inline-block;
+    margin-top: 15px;
+    color: #1abc9c;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.login-container a:hover {
+    text-decoration: underline;
+}

@@ -2,12 +2,11 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="utf-8">
-    <title>Lista de Artículos</title>
-    <link rel="stylesheet" href="{% static 'blog/static.css' %}">
+  <meta charset="utf-8">
+  <link rel="stylesheet" href="{% static 'blog/static.css' %}">
+  <title>{% block title %}Mi sitio{% endblock %}</title>
 </head>
 <body>
-  <!-- NAV -->
   <header>
     <nav>
       <!-- Menú lado izquierdo -->
@@ -37,22 +36,15 @@
     </nav>
   </header>
 
-  <!-- MAIN -->
   <main>
-    <h1>Artículos publicados</h1>
-    <ul>
-        {% for articulo in articulos %}
-            <li>
-              <strong>{{ articulo.titulo }}</strong> - {{ articulo.fecha_publicacion }} <br> (Cantidad: {{ articulo.cantidad }})
-              {{ articulo.contenido }}
-            </li>
-        {% empty %}
-            <li>No hay artículos todavía.</li>
-        {% endfor %}
-    </ul>
+    <h1>Nueva Petición</h1>
+  <form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Enviar</button>
+  </form>
   </main>
 
-  <!-- FOOTER -->
   <footer>
     <p>&copy; 2025 Mi sitio web | <a href="#">Contacto</a> | <a href="#">Aviso legal</a></p>
   </footer>
