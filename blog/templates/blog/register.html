@@ -5,6 +5,59 @@
     <meta charset="utf-8">
     <title>Registro</title>
     <link rel="stylesheet" href="{% static 'blog/static.css' %}">
+    <style>
+        .errorlist {
+            color: red;
+            font-size: 14px;
+            margin: 5px 0;
+            list-style: none;
+            padding: 0;
+        }
+        .form-container {
+            background: #fff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            max-width: 400px;
+            margin: 40px auto;
+        }
+        .form-field {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            font-weight: bold;
+        }
+        input {
+            padding: 6px;
+            width: 100%;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        button {
+            background: #38b2ac;
+            color: white;
+            padding: 8px 16px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+        button:hover {
+            background: #2c7a7b;
+        }
+        .extra-link {
+            margin-top: 15px;
+            font-size: 14px;
+            text-align: center;
+        }
+        .extra-link a {
+            color: #3182ce;
+            text-decoration: none;
+        }
+        .extra-link a:hover {
+            text-decoration: underline;
+        }
+    </style>
 </head>
 <body>
   <header>
@@ -15,13 +68,44 @@
   </header>
 
   <main>
-    <h1>Crear cuenta</h1>
-    <form method="post">
-      {% csrf_token %}
-      {{ form.as_p }}
-      <button type="submit">Registrarse</button>
-    </form>
-    <p>¿Ya tienes cuenta? <a href="{% url 'login' %}">Inicia sesión aquí</a>.</p>
+    <h1 style="text-align:center;">Crear cuenta</h1>
+
+    <div class="form-container">
+      <form method="post">
+        {% csrf_token %}
+        
+        <!-- Errores generales -->
+        {% if form.non_field_errors %}
+          <ul class="errorlist">
+            {% for error in form.non_field_errors %}
+              <li>{{ error }}</li>
+            {% endfor %}
+          </ul>
+        {% endif %}
+
+        <!-- Campos -->
+        {% for field in form %}
+          <div class="form-field">
+            <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+            {{ field }}
+            {% if field.errors %}
+              <ul class="errorlist">
+                {% for error in field.errors %}
+                  <li>{{ error }}</li>
+                {% endfor %}
+              </ul>
+            {% endif %}
+          </div>
+        {% endfor %}
+
+        <button type="submit">Registrarse</button>
+      </form>
+
+      <!-- 🔹 Enlace dentro del card -->
+      <div class="extra-link">
+        ¿Ya tienes cuenta? <a href="{% url 'login' %}">Inicia sesión aquí.</a>
+      </div>
+    </div>
   </main>
 
   <footer>
