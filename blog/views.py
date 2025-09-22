@@ -6,6 +6,8 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import login
 from .forms import RegistroForm
 from django.contrib import messages
+from django.contrib import messages
+from django.shortcuts import redirect
 
 # Create your views here.
 def lista_articulos(request):

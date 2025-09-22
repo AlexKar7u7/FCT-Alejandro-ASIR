@@ -15,9 +15,9 @@
         <a href="{% url 'lista_articulos' %}">Artículos</a> |
         <a href="{% url 'nueva_peticion' %}">Solicitar Petición</a> |
         {% if user.is_authenticated %}
-          Hola, {{ user.username }}
+          Hola, {{ user.username }} |
           {% if user.is_staff %}
-            | <a href="/admin/">Ir al Admin</a>
+             <a href="/admin/">Ir al Admin</a>
           {% endif %}
         {% else %}
           <a href="{% url 'login' %}">Iniciar sesión</a>
@@ -33,6 +33,7 @@
           </form>
         {% endif %}
       </div>
+      
     </nav>
   </header>
 
