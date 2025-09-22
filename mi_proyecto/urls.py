@@ -20,13 +20,15 @@ from django.contrib.auth import views as auth_views
 from blog import views
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
-    path('articulos/', views.lista_articulos, name='lista_articulos'),
-    path('', views.inicio, name='inicio'),
-
-    path('login/', auth_views.LoginView.as_view(template_name='registration/login.html'), name='login'),
-    path('logout/', auth_views.LogoutView.as_view(), name='logout'),
+    path("admin/", admin.site.urls),
+    path("", views.inicio, name="inicio"),
+    path("articulos/", views.lista_articulos, name="lista_articulos"),
     path("peticion/", views.nueva_peticion, name="nueva_peticion"),
 
+    # login / logout
+    path("login/", auth_views.LoginView.as_view(template_name="registration/login.html"), name="login"),
+    path("logout/", auth_views.LogoutView.as_view(next_page="inicio"), name="logout"),
+
+    # register
     path("register/", views.register, name="register"),
 ]

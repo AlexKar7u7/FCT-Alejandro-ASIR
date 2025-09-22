@@ -1,73 +1,8 @@
-{% load static %}
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="utf-8">
-    <title>Registro</title>
-    <link rel="stylesheet" href="{% static 'blog/static.css' %}">
-    <style>
-        .errorlist {
-            color: red;
-            font-size: 14px;
-            margin: 5px 0;
-            list-style: none;
-            padding: 0;
-        }
-        .form-container {
-            background: #fff;
-            padding: 30px;
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-            max-width: 400px;
-            margin: 40px auto;
-        }
-        .form-field {
-            margin-bottom: 15px;
-        }
-        label {
-            display: block;
-            font-weight: bold;
-        }
-        input {
-            padding: 6px;
-            width: 100%;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-        }
-        button {
-            background: #38b2ac;
-            color: white;
-            padding: 8px 16px;
-            border: none;
-            border-radius: 6px;
-            cursor: pointer;
-        }
-        button:hover {
-            background: #2c7a7b;
-        }
-        .extra-link {
-            margin-top: 15px;
-            font-size: 14px;
-            text-align: center;
-        }
-        .extra-link a {
-            color: #3182ce;
-            text-decoration: none;
-        }
-        .extra-link a:hover {
-            text-decoration: underline;
-        }
-    </style>
-</head>
-<body>
-  <header>
-    <nav>
-      <a href="{% url 'inicio' %}">Inicio</a> |
-      <a href="{% url 'login' %}">Iniciar sesión</a>
-    </nav>
-  </header>
+{% extends "base.html" %}
 
-  <main>
+{% block title %}Registro{% endblock %}
+
+{% block content %}
     <h1 style="text-align:center;">Crear cuenta</h1>
 
     <div class="form-container">
@@ -106,10 +41,6 @@
         ¿Ya tienes cuenta? <a href="{% url 'login' %}">Inicia sesión aquí.</a>
       </div>
     </div>
-  </main>
+{% endblock %}
 
-  <footer>
-    <p>&copy; 2025 Mi sitio web</p>
-  </footer>
-</body>
-</html>
+

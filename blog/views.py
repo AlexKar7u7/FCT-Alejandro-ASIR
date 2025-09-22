@@ -4,6 +4,8 @@ from django.contrib.auth.decorators import login_required
 from .forms import PeticionForm
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import login
+from .forms import RegistroForm
+from django.contrib import messages
 
 # Create your views here.
 def lista_articulos(request):
@@ -34,11 +36,11 @@ def nueva_peticion(request):
 
 def register(request):
     if request.method == "POST":
-        form = UserCreationForm(request.POST)
+        form = RegistroForm(request.POST)
         if form.is_valid():
-            user = form.save()
-            login(request, user)  # iniciar sesión automáticamente tras registrarse
-            return redirect("inicio")  # redirige a tu página principal
+            form.save()
+            messages.success(request, "Tu cuenta ha sido creada con éxito. Ahora puedes iniciar sesión.")
+            return redirect("login")
     else:
-        form = UserCreationForm()
+        form = RegistroForm()
     return render(request, "blog/register.html", {"form": form})

@@ -1,0 +1,47 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <link rel="stylesheet" href="{% static 'blog/static.css' %}">
+  <title>{% block title %}Mi sitio{% endblock %}</title>
+</head>
+<body>
+  <header>
+    <nav>
+      <!-- Menú lado izquierdo -->
+      <div class="nav-left">
+        <a href="{% url 'inicio' %}">Inicio</a> |
+        <a href="{% url 'lista_articulos' %}">Artículos</a> |
+        <a href="{% url 'nueva_peticion' %}">Solicitar Petición</a> |
+        {% if user.is_authenticated %}
+          Hola, {{ user.username }}
+          {% if user.is_staff %}
+            | <a href="/admin/">Ir al Admin</a>
+          {% endif %}
+        {% else %}
+          <a href="{% url 'login' %}">Iniciar sesión</a>
+        {% endif %}
+      </div>
+
+      <!-- Menú lado derecho -->
+      <div class="nav-right">
+        {% if user.is_authenticated %}
+          <form action="{% url 'logout' %}" method="post" style="display:inline;">
+            {% csrf_token %}
+            <button type="submit" class="nav-link">Cerrar sesión</button>
+          </form>
+        {% endif %}
+      </div>
+    </nav>
+  </header>
+
+  <main>
+    {% block content %}{% endblock %}
+  </main>
+
+  <footer>
+    <p>&copy; 2025 Mi sitio web | <a href="#">Contacto</a> | <a href="#">Aviso legal</a></p>
+  </footer>
+</body>
+</html>

@@ -1,44 +1,8 @@
-{% load static %}
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="utf-8">
-    <title>Lista de Artículos</title>
-    <link rel="stylesheet" href="{% static 'blog/static.css' %}">
-</head>
-<body>
-  <!-- NAV -->
-  <header>
-    <nav>
-      <!-- Menú lado izquierdo -->
-      <div class="nav-left">
-        <a href="{% url 'inicio' %}">Inicio</a> |
-        <a href="{% url 'lista_articulos' %}">Artículos</a> |
-        <a href="{% url 'nueva_peticion' %}">Solicitar Petición</a> |
-        {% if user.is_authenticated %}
-          Hola, {{ user.username }}
-          {% if user.is_staff %}
-            | <a href="/admin/">Ir al Admin</a>
-          {% endif %}
-        {% else %}
-          <a href="{% url 'login' %}">Iniciar sesión</a>
-        {% endif %}
-      </div>
+{% extends "base.html" %}
 
-      <!-- Menú lado derecho -->
-      <div class="nav-right">
-        {% if user.is_authenticated %}
-          <form action="{% url 'logout' %}" method="post" style="display:inline;">
-            {% csrf_token %}
-            <button type="submit" class="nav-link">Cerrar sesión</button>
-          </form>
-        {% endif %}
-      </div>
-    </nav>
-  </header>
+{% block title %}Registro{% endblock %}
 
-  <!-- MAIN -->
-  <main>
+{% block content %}
     <h1>Artículos publicados</h1>
     <ul>
         {% for articulo in articulos %}
@@ -50,11 +14,4 @@
             <li>No hay artículos todavía.</li>
         {% endfor %}
     </ul>
-  </main>
-
-  <!-- FOOTER -->
-  <footer>
-    <p>&copy; 2025 Mi sitio web | <a href="#">Contacto</a> | <a href="#">Aviso legal</a></p>
-  </footer>
-</body>
-</html>
+{% endblock %}
