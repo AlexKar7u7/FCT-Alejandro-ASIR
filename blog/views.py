@@ -2,6 +2,8 @@ from django.shortcuts import render, redirect
 from .models import Articulo
 from django.contrib.auth.decorators import login_required
 from .forms import PeticionForm
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth import login
 
 # Create your views here.
 def lista_articulos(request):
@@ -28,3 +30,15 @@ def nueva_peticion(request):
     else:
         form = PeticionForm()
     return render(request, "blog/nueva_peticion.html", {"form": form})
+
+
+def register(request):
+    if request.method == "POST":
+        form = UserCreationForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+            login(request, user)  # iniciar sesión automáticamente tras registrarse
+            return redirect("inicio")  # redirige a tu página principal
+    else:
+        form = UserCreationForm()
+    return render(request, "blog/register.html", {"form": form})
