@@ -19,3 +19,26 @@ class Peticion(models.Model):
 
     def __str__(self):
         return f"{self.titulo} - {self.usuario.username}"
+    
+
+class Propuesta(models.Model):
+    titulo = models.CharField(max_length=200)
+    descripcion = models.TextField()
+    fecha_creacion = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.titulo
+
+    def votos_positivos(self):
+        return self.votos.filter(valor=True).count()
+
+    def votos_negativos(self):
+        return self.votos.filter(valor=False).count()
+
+class Voto(models.Model):
+    propuesta = models.ForeignKey(Propuesta, related_name="votos", on_delete=models.CASCADE)
+    usuario = models.ForeignKey(User, on_delete=models.CASCADE)
+    valor = models.BooleanField()  # True = Me gusta, False = No me gusta
+
+    class Meta:
+        unique_together = ("propuesta", "usuario")  # un usuario solo puede votar una vez

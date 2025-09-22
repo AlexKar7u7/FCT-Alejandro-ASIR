@@ -1,7 +1,73 @@
 {% extends "base.html" %}
-
-{% block title %}Inicio{% endblock %}
+{% load static %}
 
 {% block content %}
+<div class="hero d-flex align-items-center justify-content-center">
+  <div class="text-center text-white">
+    <h1 class="mb-3">Bienvenido a Nuestra Comunidad</h1>
+    <p class="lead">Un espacio para compartir, proponer y votar ideas juntos.</p>
+  </div>
+</div>
 
+<div class="container my-5">
+
+  <h2 class="text-center mb-5">¿Cómo funciona?</h2>
+
+  <div class="row text-center">
+    <!-- Administradores -->
+    <div class="col-md-4 mb-4">
+      <div class="card shadow border-0 h-100">
+        <div class="card-body">
+          <div class="mb-3">
+            <i class="bi bi-shield-lock" style="font-size: 2rem; color: #0d6efd;"></i>
+          </div>
+          <h5 class="card-title">Administradores</h5>
+          <p class="card-text">Pueden añadir, actualizar o borrar propuestas para mantener el sitio al día.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Usuarios -->
+    <div class="col-md-4 mb-4">
+      <div class="card shadow border-0 h-100">
+        <div class="card-body">
+          <div class="mb-3">
+            <i class="bi bi-people" style="font-size: 2rem; color: #198754;"></i>
+          </div>
+          <h5 class="card-title">Usuarios</h5>
+          <p class="card-text">Registrándote, podrás ver las propuestas, votar y participar en la comunidad.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Votaciones -->
+    <div class="col-md-4 mb-4">
+      <div class="card shadow border-0 h-100">
+        <div class="card-body">
+          <div class="mb-3">
+            <i class="bi bi-hand-thumbs-up" style="font-size: 2rem; color: #ffc107;"></i>
+          </div>
+          <h5 class="card-title">Votaciones</h5>
+          <p class="card-text">Da tu opinión con un voto positivo o negativo sobre las propuestas de los administradores.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Condiciones generales -->
+  <div class="card shadow border-0 mt-5">
+    <div class="card-body text-center">
+      <div class="mb-3">
+        <i class="bi bi-info-circle" style="font-size: 2rem; color: #6c757d;"></i>
+      </div>
+      <h5 class="card-title">Condiciones Generales</h5>
+      <ul class="list-unstyled mt-3">
+        <li>• Solo usuarios registrados pueden votar propuestas.</li>
+        <li>• Cada usuario puede emitir un voto por propuesta.</li>
+        <li>• Los administradores gestionan el contenido y supervisan las votaciones.</li>
+      </ul>
+    </div>
+  </div>
+
+</div>
 {% endblock %}

@@ -4,8 +4,11 @@ from django.contrib import admin
 from django.contrib import admin
 from .models import Articulo
 from .models import Peticion
+from .models import Propuesta, Voto
 
 admin.site.register(Articulo)
+admin.site.register(Propuesta)
+admin.site.register(Voto)
 
 @admin.register(Peticion)
 class PeticionAdmin(admin.ModelAdmin):

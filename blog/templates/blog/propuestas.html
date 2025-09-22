@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block title %}Propuestas{% endblock %}
+
+{% block content %}
+<h1 class="mb-4">Propuestas de los administradores</h1>
+
+{% for propuesta in propuestas %}
+    <div class="card mb-3">
+        <div class="card-body">
+            <h3>{{ propuesta.titulo }}</h3>
+            <p>{{ propuesta.descripcion }}</p>
+            <p><small>Creada el {{ propuesta.fecha_creacion|date:"d/m/Y" }}</small></p>
+            <div class="d-flex justify-content-between">
+                <a href="{% url 'votar' propuesta.id 1 %}" class="btn btn-success">👍 Me gusta ({{ propuesta.votos_positivos }})</a>
+                <a href="{% url 'votar' propuesta.id 0 %}" class="btn btn-danger">👎 No me gusta ({{ propuesta.votos_negativos }})</a>
+            </div>
+        </div>
+    </div>
+{% empty %}
+    <p>No hay propuestas todavía.</p>
+{% endfor %}
+{% endblock %}

@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from .models import Articulo
 from django.contrib.auth.decorators import login_required
 from .forms import PeticionForm
@@ -8,6 +8,8 @@ from .forms import RegistroForm
 from django.contrib import messages
 from django.contrib import messages
 from django.shortcuts import redirect
+from .models import Propuesta, Voto
+
 
 # Create your views here.
 def lista_articulos(request):
@@ -46,3 +48,18 @@ def register(request):
     else:
         form = RegistroForm()
     return render(request, "blog/register.html", {"form": form})
+
+
+
+def lista_propuestas(request):
+    propuestas = Propuesta.objects.all()
+    return render(request, "blog/propuestas.html", {"propuestas": propuestas})
+
+@login_required
+def votar(request, propuesta_id, valor):
+    propuesta = get_object_or_404(Propuesta, id=propuesta_id)
+    voto, created = Voto.objects.update_or_create(
+        propuesta=propuesta, usuario=request.user,
+        defaults={"valor": valor}
+    )
+    return redirect("lista_propuestas")
