@@ -4,14 +4,15 @@
 
 {% block content %}
     <h1>Artículos publicados</h1>
-    <ul>
-        {% for articulo in articulos %}
-            <li>
-              <strong>{{ articulo.titulo }}</strong> - {{ articulo.fecha_publicacion }} <br> (Cantidad: {{ articulo.cantidad }})
-              {{ articulo.contenido }}
-            </li>
-        {% empty %}
-            <li>No hay artículos todavía.</li>
-        {% endfor %}
-    </ul>
+<div class="articulos-container">
+    {% for articulo in articulos %}
+        <div class="article-card">
+            <h2>{{ articulo.titulo }}</h2>
+            <p><small>Publicado el {{ articulo.fecha_publicacion }} | Cantidad: {{ articulo.cantidad }}</small></p>
+            <p>{{ articulo.contenido }}</p>
+        </div>
+    {% empty %}
+        <p>No hay artículos todavía.</p>
+    {% endfor %}
+</div>
 {% endblock %}
