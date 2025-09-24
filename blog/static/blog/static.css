@@ -13,6 +13,7 @@
     --btn-bg: #1abc9c;
     --btn-hover: #16a085;
     --form-bg: #fff;
+    --from-bg-cs:#34495e;
 }
 
 /* Tema oscuro */
@@ -26,6 +27,7 @@ body.dark-mode {
     --btn-bg: #3498db;
     --btn-hover: #2980b9;
     --form-bg: #2c2c2c;
+    --from-bg-cs:#2c2c2c;
 }
 
 /* ==============================
@@ -235,6 +237,12 @@ footer a:hover {
 
 
 /* Links y botón estilo link */
+.frm-logout {
+    background: var(--form-bg-cs);/* Un tono un poco más claro que el del nav */
+    border-radius: 5px;
+    padding: 8px 15px;
+}
+
 header nav a,
 header nav button.nav-link {
     color: white;

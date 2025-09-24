@@ -31,7 +31,7 @@
       <!-- Menú lado derecho -->
       <div class="nav-right">
         {% if user.is_authenticated %}
-        <form action="{% url 'logout' %}" method="post" style="display:inline;">
+        <form action="{% url 'logout' %}" method="post" style="display:inline;" class="frm-logout">
           {% csrf_token %}
           <button type="submit" class="nav-link">Cerrar sesión</button>
         </form>
