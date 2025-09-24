@@ -7,6 +7,8 @@ class Articulo(models.Model):
     fecha_publicacion = models.DateTimeField(auto_now_add=True)
     cantidad = models.PositiveIntegerField(default=0)
 
+    interesados = models.ManyToManyField(User, related_name='articulos_interesados', blank=True)
+
     def __str__(self):
         return f"{self.titulo} (x{self.cantidad})"
     

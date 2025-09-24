@@ -10,6 +10,17 @@
             <h2>{{ articulo.titulo }}</h2>
             <p><small>Publicado el {{ articulo.fecha_publicacion }} | Cantidad: {{ articulo.cantidad }}</small></p>
             <p>{{ articulo.contenido }}</p>
+
+            <div class="me-interesa-container" style="display: flex; align-items: center; gap: 10px; margin-top: 15px;">
+                <a href="{% url 'me_interesa' articulo.id %}" class="btn">
+                    {% if articulo.is_interesado %}
+                        Ya no me interesa
+                    {% else %}
+                        Me interesa
+                    {% endif %}
+                </a>
+                <p>A {{ articulo.interesados.count }} persona(s) les interesa.</p>
+            </div>
         </div>
     {% empty %}
         <p>No hay artículos todavía.</p>

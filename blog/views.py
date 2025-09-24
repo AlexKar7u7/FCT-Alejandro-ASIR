@@ -22,7 +22,27 @@ def inicio(request):
 
 def lista_articulos(request):
     articulos = Articulo.objects.all()
+    # Verificar si el usuario está autenticado antes de intentar filtrar
+    if request.user.is_authenticated:
+        for articulo in articulos:
+            # Añade una propiedad booleana a cada artículo
+            articulo.is_interesado = articulo.interesados.filter(id=request.user.id).exists()
+    else:
+        # Si no está autenticado, todos los artículos no están "interesados"
+        for articulo in articulos:
+            articulo.is_interesado = False
+            
     return render(request, 'blog/lista.html', {'articulos': articulos})
+
+@login_required
+def me_interesa(request, articulo_id):
+    articulo = get_object_or_404(Articulo, id=articulo_id)
+    if articulo.interesados.filter(id=request.user.id).exists():
+        articulo.interesados.remove(request.user)  # Si ya está interesado, lo elimina
+    else:
+        articulo.interesados.add(request.user)     # Si no está interesado, lo añade
+    
+    return redirect('lista_articulos')
 
 @login_required
 def nueva_peticion(request):

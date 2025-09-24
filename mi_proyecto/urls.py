@@ -23,6 +23,7 @@ urlpatterns = [
     path("admin/", admin.site.urls),
     path("", views.inicio, name="inicio"),
     path("articulos/", views.lista_articulos, name="lista_articulos"),
+    path("articulos/<int:articulo_id>/me_interesa/", views.me_interesa, name="me_interesa"),
     path("peticion/", views.nueva_peticion, name="nueva_peticion"),
 
     # login / logout
