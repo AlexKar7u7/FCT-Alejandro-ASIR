@@ -71,12 +71,8 @@ main {
     width: 100%;
     margin: 0 auto;
     box-sizing: border-box;
-    padding-bottom: 100px; /* espacio con el footer */
 }
 
-article {
-    margin-bottom: 50px;
-}
 
 /* Botones */
 button, .btn {
@@ -232,4 +228,32 @@ footer a:hover {
 .btn-theme:hover {
     background: var(--text-color);
     color: var(--bg-color);
+}
+
+
+
+/* Links y botón estilo link */
+header nav a,
+header nav button.nav-link {
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+    margin: 0 10px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 1em;
+    transition: 0.3s;
+}
+
+header nav a:hover,
+header nav button.nav-link:hover {
+    color: #1abc9c;
+}
+
+/* Formulario inline */
+header nav form {
+    margin: 0;
+    padding: 0;
+    display: inline;
 }
