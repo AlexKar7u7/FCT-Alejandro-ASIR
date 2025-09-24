@@ -3,10 +3,13 @@
 {% block title %}Solicitar Petición{% endblock %}
 
 {% block content %}
-<h1>Nueva Petición</h1>
+<h1 class="mb-4">Nueva Petición</h1>
+
+<div class="peticion-card">
   <form method="post">
     {% csrf_token %}
     {{ form.as_p }}
-    <button type="submit">Enviar</button>
+    <button type="submit" class="btn btn-primary">Enviar</button>
   </form>
+</div>
 {% endblock %}
