@@ -1,5 +1,5 @@
 from django import forms
-from .models import Peticion
+from .models import Peticion, Tema, Comentario
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 
@@ -10,6 +10,28 @@ class PeticionForm(forms.ModelForm):
         widgets = {
             "titulo": forms.TextInput(attrs={"class": "form-control", "placeholder": "Escribe el asunto"}),
             "mensaje": forms.Textarea(attrs={"class": "form-control", "placeholder": "Describe tu petición..."}),
+        }
+
+
+
+class TemaForm(forms.ModelForm):
+    class Meta:
+        model = Tema
+        fields = ["titulo", "contenido"]
+        widgets = {
+            "titulo": forms.TextInput(attrs={"class": "form-control", "placeholder": "Título del nuevo tema"}),
+            "contenido": forms.Textarea(attrs={"class": "form-control", "placeholder": "Escribe el contenido de tu tema..."}),
+        }
+
+class ComentarioForm(forms.ModelForm):
+    class Meta:
+        model = Comentario
+        fields = ["contenido"]
+        widgets = {
+            "contenido": forms.Textarea(attrs={"class": "form-control", "placeholder": "Escribe tu comentario...", "rows": 3}),
+        }
+        labels = {
+            "contenido": "Comentario",
         }
 
 class RegistroForm(UserCreationForm):
@@ -42,3 +64,4 @@ class RegistroForm(UserCreationForm):
         if password1 and password2 and password1 != password2:
             raise forms.ValidationError("Las contraseñas no coinciden.")
         return password2
+    

@@ -8,7 +8,8 @@ from .forms import RegistroForm
 from django.contrib import messages
 from django.contrib import messages
 from django.shortcuts import redirect
-from .models import Propuesta, Voto
+from .models import Propuesta, Voto, Tema, Comentario
+from .forms import TemaForm, ComentarioForm
 
 
 # Create your views here.
@@ -83,3 +84,54 @@ def votar(request, propuesta_id, valor):
         defaults={"valor": valor}
     )
     return redirect("lista_propuestas")
+
+def lista_temas(request):
+    """Muestra la lista de todos los temas creados."""
+    temas = Tema.objects.all().order_by('-fecha_creacion')
+    return render(request, 'blog/lista_temas.html', {'temas': temas})
+
+@login_required
+def nuevo_tema(request):
+    """Permite a los usuarios crear un nuevo tema."""
+    if request.method == "POST":
+        form = TemaForm(request.POST)
+        if form.is_valid():
+            tema = form.save(commit=False)
+            tema.autor = request.user
+            tema.save()
+            messages.success(request, "El tema ha sido creado con éxito.")
+            return redirect("detalle_tema", tema_id=tema.id) 
+    else:
+        form = TemaForm()
+    return render(request, "blog/nuevo_tema.html", {"form": form})
+
+def detalle_tema(request, tema_id):
+    """Muestra un tema y sus comentarios, y el formulario para un nuevo comentario."""
+    tema = get_object_or_404(Tema, id=tema_id)
+    comentarios = tema.comentarios.all() # Usamos related_name='comentarios'
+    form = ComentarioForm()
+    
+    return render(request, 'blog/detalle_tema.html', {
+        'tema': tema,
+        'comentarios': comentarios,
+        'form': form, # El formulario de comentario
+    })
+
+@login_required
+def nuevo_comentario(request, tema_id):
+    """Procesa el formulario para añadir un nuevo comentario."""
+    tema = get_object_or_404(Tema, id=tema_id)
+    if request.method == "POST":
+        form = ComentarioForm(request.POST)
+        if form.is_valid():
+            comentario = form.save(commit=False)
+            comentario.tema = tema
+            comentario.autor = request.user
+            comentario.save()
+            messages.success(request, "Comentario publicado con éxito.")
+            # Redirige al detalle del tema, incluyendo el ancla para el nuevo comentario
+            return redirect('detalle_tema', tema_id=tema_id)
+    
+    # Si no es POST o el formulario no es válido, redirigimos al detalle
+    messages.error(request, "No se pudo publicar el comentario.")
+    return redirect('detalle_tema', tema_id=tema_id)

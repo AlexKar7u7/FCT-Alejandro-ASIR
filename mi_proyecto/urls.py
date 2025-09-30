@@ -36,4 +36,11 @@ urlpatterns = [
     # propuestas y votos
     path("propuestas/", views.lista_propuestas, name="lista_propuestas"),
     path("votar/<int:propuesta_id>/<int:valor>/", views.votar, name="votar"),
+
+
+    path("temas/", views.lista_temas, name="lista_temas"),
+    path("temas/nuevo/", views.nuevo_tema, name="nuevo_tema"),
+    path("temas/<int:tema_id>/", views.detalle_tema, name="detalle_tema"),
+    path("temas/<int:tema_id>/comentar/", views.nuevo_comentario, name="nuevo_comentario"),
+    
 ]

@@ -44,3 +44,25 @@ class Voto(models.Model):
 
     class Meta:
         unique_together = ("propuesta", "usuario")  # un usuario solo puede votar una vez
+
+class Tema(models.Model):
+    titulo = models.CharField(max_length=200)
+    autor = models.ForeignKey(User, on_delete=models.CASCADE)
+    contenido = models.TextField()
+    fecha_creacion = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.titulo
+    
+# --- Nuevo Modelo Comentario (Comment) ---
+class Comentario(models.Model):
+    tema = models.ForeignKey(Tema, related_name='comentarios', on_delete=models.CASCADE)
+    autor = models.ForeignKey(User, on_delete=models.CASCADE)
+    contenido = models.TextField()
+    fecha_creacion = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"Comentario de {self.autor.username} en {self.tema.titulo}"
+    
+    class Meta:
+        ordering = ['fecha_creacion'] # Ordenar comentarios por fecha de creación
