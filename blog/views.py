@@ -135,3 +135,19 @@ def nuevo_comentario(request, tema_id):
     # Si no es POST o el formulario no es válido, redirigimos al detalle
     messages.error(request, "No se pudo publicar el comentario.")
     return redirect('detalle_tema', tema_id=tema_id)
+
+@login_required
+def borrar_comentario(request, comentario_id):
+    """Permite al usuario borrar un comentario si es el autor."""
+    comentario = get_object_or_404(Comentario, id=comentario_id)
+    tema_id = comentario.tema.id  # Guardar el ID del tema para redirigir
+    
+    # 1. Verificar que el usuario es el autor del comentario
+    if comentario.autor == request.user:
+        comentario.delete()
+        messages.success(request, "El comentario ha sido borrado con éxito.")
+    else:
+        # 2. Si no es el autor, se prohíbe la acción
+        messages.error(request, "No tienes permiso para borrar este comentario.")
+        
+    return redirect('detalle_tema', tema_id=tema_id)

@@ -42,5 +42,5 @@ urlpatterns = [
     path("temas/nuevo/", views.nuevo_tema, name="nuevo_tema"),
     path("temas/<int:tema_id>/", views.detalle_tema, name="detalle_tema"),
     path("temas/<int:tema_id>/comentar/", views.nuevo_comentario, name="nuevo_comentario"),
-    
+    path("comentarios/<int:comentario_id>/borrar/", views.borrar_comentario, name="borrar_comentario"),
 ]

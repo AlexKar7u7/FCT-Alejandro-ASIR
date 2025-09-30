@@ -20,7 +20,20 @@
     <div class="comentarios-list mb-5">
         {% for comentario in comentarios %}
         <div class="comentario-card mb-3">
-            <p class="mb-1"><strong>{{ comentario.autor.username }}</strong> | <small>{{ comentario.fecha_creacion|date:"d/m/Y H:i" }}</small></p>
+            <p class="mb-1">
+                {% if user.is_authenticated and user == comentario.autor %}
+                <form action="{% url 'borrar_comentario' comentario.id %}" method="post" style="display:inline-block; margin-left: 10px;">
+                    {% csrf_token %}
+                    <button type="submit" class="btn-sm btn-danger" 
+                        onclick="return confirm('¿Estás seguro de que quieres borrar este comentario?')"
+                        style="background-color: #e74c3c; color: white; border: none; padding: 5px 10px; border-radius: 5px; cursor: pointer;">
+                        Borrar comentario
+                    </button>
+                </form>
+                {% endif %}
+                <br>
+                <strong>{{ comentario.autor.username }}</strong> | <small>{{ comentario.fecha_creacion|date:"d/m/Y H:i" }}</small>
+            </p>
             <p>{{ comentario.contenido|linebreaksbr }}</p>
         </div>
         {% empty %}
@@ -57,6 +70,11 @@
         /* Reutiliza el estilo del formulario en peticion-card */
         max-width: 100%;
         box-shadow: none;
+    }
+    /* Estilo para el botón Borrar más pequeño */
+    .btn-sm-danger {
+        font-size: 0.75em;
+        padding: 3px 6px;
     }
 </style>
 {% endblock %}
