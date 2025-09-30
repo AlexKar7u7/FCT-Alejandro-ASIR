@@ -106,33 +106,45 @@ def nuevo_tema(request):
     return render(request, "blog/nuevo_tema.html", {"form": form})
 
 def detalle_tema(request, tema_id):
-    """Muestra un tema y sus comentarios, y el formulario para un nuevo comentario."""
+    """Muestra un tema, sus comentarios de nivel superior, y el formulario para un nuevo comentario."""
     tema = get_object_or_404(Tema, id=tema_id)
-    comentarios = tema.comentarios.all() # Usamos related_name='comentarios'
+    
+    # Filtramos solo los comentarios de nivel superior (aquellos sin padre)
+    comentarios_principales = tema.comentarios.filter(parent__isnull=True)
+    
     form = ComentarioForm()
     
     return render(request, 'blog/detalle_tema.html', {
         'tema': tema,
-        'comentarios': comentarios,
-        'form': form, # El formulario de comentario
+        'comentarios': comentarios_principales, # Enviamos solo los comentarios principales
+        'form': form, # El formulario de comentario principal
     })
 
 @login_required
 def nuevo_comentario(request, tema_id):
-    """Procesa el formulario para añadir un nuevo comentario."""
+    """Procesa el formulario para añadir un nuevo comentario o una respuesta."""
     tema = get_object_or_404(Tema, id=tema_id)
+    
     if request.method == "POST":
         form = ComentarioForm(request.POST)
         if form.is_valid():
             comentario = form.save(commit=False)
             comentario.tema = tema
             comentario.autor = request.user
+            
+            # Lógica para manejar la respuesta a otro comentario (anidamiento)
+            parent_id = request.POST.get('parent_id')
+            if parent_id:
+                try:
+                    comentario.parent = Comentario.objects.get(id=parent_id)
+                except Comentario.DoesNotExist:
+                    messages.error(request, "El comentario al que intentas responder no existe.")
+                    return redirect('detalle_tema', tema_id=tema_id)
+            
             comentario.save()
             messages.success(request, "Comentario publicado con éxito.")
-            # Redirige al detalle del tema, incluyendo el ancla para el nuevo comentario
             return redirect('detalle_tema', tema_id=tema_id)
     
-    # Si no es POST o el formulario no es válido, redirigimos al detalle
     messages.error(request, "No se pudo publicar el comentario.")
     return redirect('detalle_tema', tema_id=tema_id)
 

@@ -1,0 +1,58 @@
+<div class="comentario-card mb-3 {% if nivel > 0 %}respuesta{% endif %}">
+    <div class="comentario-header-control">
+        <p class="mb-1">
+            <strong>{{ comentario.autor.username }}</strong> | <small>{{ comentario.fecha_creacion|date:"d/m/Y H:i" }}</small>
+        </p>
+        
+        <div class="comentario-actions">
+            {% if user.is_authenticated %}
+                <button type="button" onclick="mostrarFormularioRespuesta('{{ comentario.id }}')">Responder</button>
+            
+                {% if user == comentario.autor %}
+                <form action="{% url 'borrar_comentario' comentario.id %}" method="post" style="display:inline-block;">
+                    {% csrf_token %}
+                    <button type="submit" class="btn-danger" 
+                        onclick="return confirm('¿Estás seguro de que quieres borrar este comentario?')">
+                        Borrar
+                    </button>
+                </form>
+                {% endif %}
+            {% endif %}
+        </div>
+    </div>
+    
+    <p class="comentario-contenido">{{ comentario.contenido|linebreaksbr }}</p>
+
+    {% if user.is_authenticated %}
+    <div id="form-respuesta-{{ comentario.id }}" style="display: none; margin-top: 10px;">
+        <form method="post" action="{% url 'nuevo_comentario' tema.id %}" class="peticion-card">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <input type="hidden" name="parent_id" value="{{ comentario.id }}">
+            <button type="submit" class="btn btn-primary">Enviar Respuesta</button>
+        </form>
+    </div>
+    {% endif %}
+
+    {% for respuesta in comentario.respuestas.all %}
+        {% include 'blog/comentario_individual.html' with comentario=respuesta nivel=nivel|add:1 %}
+    {% endfor %}
+</div>
+
+{% if nivel == 0 %}
+<script>
+    // Función para mostrar el formulario de respuesta
+    function mostrarFormularioRespuesta(comentarioId) {
+        // Ocultar todos los formularios de respuesta primero (opcional, pero limpio)
+        document.querySelectorAll('[id^="form-respuesta-"]').forEach(form => {
+            form.style.display = 'none';
+        });
+        
+        // Mostrar el formulario específico
+        const formDiv = document.getElementById('form-respuesta-' + comentarioId);
+        if (formDiv) {
+            formDiv.style.display = 'block';
+        }
+    }
+</script>
+{% endif %}

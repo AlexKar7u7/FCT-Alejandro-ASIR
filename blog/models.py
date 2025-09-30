@@ -61,6 +61,8 @@ class Comentario(models.Model):
     contenido = models.TextField()
     fecha_creacion = models.DateTimeField(auto_now_add=True)
 
+    parent = models.ForeignKey('self', null=True, blank=True, related_name='respuestas', on_delete=models.CASCADE)
+
     def __str__(self):
         return f"Comentario de {self.autor.username} en {self.tema.titulo}"
     

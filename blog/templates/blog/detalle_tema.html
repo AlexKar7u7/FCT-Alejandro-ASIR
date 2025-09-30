@@ -15,34 +15,19 @@
         </div>
     </div>
 
-    <h2 class="mb-3">Comentarios ({{ comentarios.count }})</h2>
+    <h2 class="mb-3">Comentarios ({{ tema.comentarios.count }})</h2>
     
     <div class="comentarios-list mb-5">
+        
         {% for comentario in comentarios %}
-        <div class="comentario-card mb-3">
-            <p class="mb-1">
-                {% if user.is_authenticated and user == comentario.autor %}
-                <form action="{% url 'borrar_comentario' comentario.id %}" method="post" style="display:inline-block; margin-left: 10px;">
-                    {% csrf_token %}
-                    <button type="submit" class="btn-sm btn-danger" 
-                        onclick="return confirm('¿Estás seguro de que quieres borrar este comentario?')"
-                        style="background-color: #e74c3c; color: white; border: none; padding: 5px 10px; border-radius: 5px; cursor: pointer;">
-                        Borrar comentario
-                    </button>
-                </form>
-                {% endif %}
-                <br>
-                <strong>{{ comentario.autor.username }}</strong> | <small>{{ comentario.fecha_creacion|date:"d/m/Y H:i" }}</small>
-            </p>
-            <p>{{ comentario.contenido|linebreaksbr }}</p>
-        </div>
+            {% include 'blog/comentario_individual.html' with comentario=comentario nivel=0 %}
         {% empty %}
-        <p>Sé el primero en comentar este tema.</p>
+            <p>Sé el primero en comentar este tema.</p>
         {% endfor %}
     </div>
 
-    <div class="comentario-form-container mt-5">
-        <h3 class="mb-3">Añadir Comentario</h3>
+    <div class="comentario-form-container mt-5" id="formulario-comentario-principal">
+        <h3 class="mb-3">Añadir Comentario Principal</h3>
         {% if user.is_authenticated %}
             <form method="post" action="{% url 'nuevo_comentario' tema.id %}" class="peticion-card">
                 {% csrf_token %}
@@ -56,6 +41,7 @@
 </div>
 
 <style>
+    /* Estilos existentes */
     .comentario-card {
         background: var(--card-bg);
         border: 1px solid #e0e0e0;
@@ -67,14 +53,43 @@
         margin: 0;
     }
     .peticion-card {
-        /* Reutiliza el estilo del formulario en peticion-card */
         max-width: 100%;
         box-shadow: none;
     }
-    /* Estilo para el botón Borrar más pequeño */
-    .btn-sm-danger {
-        font-size: 0.75em;
-        padding: 3px 6px;
+    
+    /* Estilos para el anidamiento y botones de control */
+    .comentario-header-control {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 5px;
+    }
+    .comentario-actions button {
+        background: none;
+        border: none;
+        color: var(--link-hover);
+        cursor: pointer;
+        padding: 0;
+        margin-left: 10px;
+        font-size: 0.9em;
+    }
+    .comentario-actions button:hover {
+        text-decoration: underline;
+    }
+    /* El botón Borrar rojo */
+    .btn-danger {
+        background-color: #e74c3c;
+        color: white;
+        padding: 5px 10px;
+        border-radius: 5px;
+        font-size: 0.8em;
+    }
+    /* Margen para respuestas anidadas */
+    .respuesta {
+        margin-left: 20px;
+        margin-top: 10px;
+        padding-left: 10px;
+        border-left: 2px solid #ccc;
     }
 </style>
 {% endblock %}
