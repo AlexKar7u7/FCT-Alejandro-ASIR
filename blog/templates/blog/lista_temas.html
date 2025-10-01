@@ -14,7 +14,7 @@
 <div class="temas-container">
     {% for tema in temas %}
         <div class="article-card mb-3">
-            <h2><a href="{% url 'detalle_tema' tema.id %}" style="text-decoration: none;">{{ tema.titulo }}</a></h2>
+            <h2><a style="text-decoration: none;">{{ tema.titulo }}</a></h2>
             <p><small>Creado por: <strong>{{ tema.autor.username }}</strong> | {{ tema.fecha_creacion|date:"d/m/Y H:i" }} | Comentarios: {{ tema.comentarios.count }}</small></p>
             <p>{{ tema.contenido|truncatechars:150 }}</p>
             <a href="{% url 'detalle_tema' tema.id %}" class="btn">Ver tema ({{ tema.comentarios.count }} comentarios)</a>

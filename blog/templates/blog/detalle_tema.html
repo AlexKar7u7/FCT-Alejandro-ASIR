@@ -27,7 +27,7 @@
     </div>
 
     <div class="comentario-form-container mt-5" id="formulario-comentario-principal">
-        <h3 class="mb-3">Añadir Comentario Principal</h3>
+        <h3 class="mb-3">Añadir Comentario</h3>
         {% if user.is_authenticated %}
             <form method="post" action="{% url 'nuevo_comentario' tema.id %}" class="peticion-card">
                 {% csrf_token %}
