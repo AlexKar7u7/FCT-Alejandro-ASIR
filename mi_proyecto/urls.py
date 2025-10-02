@@ -43,4 +43,9 @@ urlpatterns = [
     path("temas/<int:tema_id>/", views.detalle_tema, name="detalle_tema"),
     path("temas/<int:tema_id>/comentar/", views.nuevo_comentario, name="nuevo_comentario"),
     path("comentarios/<int:comentario_id>/borrar/", views.borrar_comentario, name="borrar_comentario"),
+
+
+    path("guias/", views.lista_guias, name="lista_guias"),
+    path("guias/nueva/", views.nueva_guia, name="nueva_guia"),
+    path("guias/<int:guia_id>/", views.detalle_guia, name="detalle_guia"),
 ]

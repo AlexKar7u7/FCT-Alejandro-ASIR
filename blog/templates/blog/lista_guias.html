@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+
+{% block title %}Guías de Usuario{% endblock %}
+
+{% block content %}
+<h1 class="mb-4">Guías de la Comunidad</h1>
+
+{% if user.is_authenticated %}
+<div class="d-flex justify-content-between mb-4">
+    <a href="{% url 'nueva_guia' %}" class="btn">Crear Nueva Guía</a>
+</div>
+<br>
+<br>
+{% endif %}
+
+<div class="guias-container">
+    {% for guia in guias %}
+        <div class="article-card mb-3">
+            <h2><a href="{% url 'detalle_guia' guia.id %}" style="text-decoration: none;">{{ guia.titulo }}</a></h2>
+            <p><small>Creada por: <strong>{{ guia.autor.username }}</strong> | {{ guia.fecha_creacion|date:"d/m/Y" }} | Última actualización: {{ guia.ultima_modificacion|date:"d/m/Y H:i" }}</small></p>
+            
+            <p>{{ guia.contenido|linebreaksbr|truncatechars:200 }}</p>
+
+            <a href="{% url 'detalle_guia' guia.id %}" class="btn">Ver Guía Completa</a>
+        </div>
+    {% empty %}
+        <p>Aún no hay guías creadas. ¡Sé el primero en crear una!</p>
+    {% endfor %}
+</div>
+
+<style>
+    .guias-container {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+    }
+</style>
+{% endblock %}

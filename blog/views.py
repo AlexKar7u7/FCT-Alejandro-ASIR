@@ -8,8 +8,8 @@ from .forms import RegistroForm
 from django.contrib import messages
 from django.contrib import messages
 from django.shortcuts import redirect
-from .models import Propuesta, Voto, Tema, Comentario
-from .forms import TemaForm, ComentarioForm
+from .models import Propuesta, Voto, Tema, Comentario, Guia
+from .forms import TemaForm, ComentarioForm, GuiaForm
 
 
 def lista_articulos(request):
@@ -154,3 +154,29 @@ def borrar_comentario(request, comentario_id):
         messages.error(request, "No tienes permiso para borrar este comentario.")
         
     return redirect('detalle_tema', tema_id=tema_id)
+
+
+def lista_guias(request):
+    """Muestra la lista de todas las guías creadas."""
+    guias = Guia.objects.all().order_by('-fecha_creacion')
+    return render(request, 'blog/lista_guias.html', {'guias': guias})
+
+@login_required
+def nueva_guia(request):
+    """Permite a los usuarios crear una nueva guía."""
+    if request.method == "POST":
+        form = GuiaForm(request.POST)
+        if form.is_valid():
+            guia = form.save(commit=False)
+            guia.autor = request.user
+            guia.save()
+            messages.success(request, "La guía ha sido creada con éxito.")
+            return redirect("detalle_guia", guia_id=guia.id)
+    else:
+        form = GuiaForm()
+    return render(request, "blog/nueva_guia.html", {"form": form})
+
+def detalle_guia(request, guia_id):
+    """Muestra el contenido de una guía."""
+    guia = get_object_or_404(Guia, id=guia_id)
+    return render(request, 'blog/detalle_guia.html', {'guia': guia})

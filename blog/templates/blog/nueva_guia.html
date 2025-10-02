@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block title %}Crear Nueva Guía{% endblock %}
+
+{% block content %}
+<h1 class="mb-4">Crear Nueva Guía</h1>
+
+<div class="peticion-card">
+    <p>Crea una guía detallada y compártela con la comunidad.</p>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="btn btn-primary">Publicar Guía</button>
+    </form>
+</div>
+{% endblock %}

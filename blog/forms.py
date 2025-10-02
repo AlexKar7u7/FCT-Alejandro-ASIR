@@ -1,5 +1,5 @@
 from django import forms
-from .models import Peticion, Tema, Comentario
+from .models import Peticion, Tema, Comentario, Guia
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 
@@ -65,3 +65,15 @@ class RegistroForm(UserCreationForm):
             raise forms.ValidationError("Las contraseñas no coinciden.")
         return password2
     
+
+class GuiaForm(forms.ModelForm):
+    class Meta:
+        model = Guia
+        fields = ["titulo", "contenido"]
+        widgets = {
+            "titulo": forms.TextInput(attrs={"class": "form-control", "placeholder": "Título de la guía"}),
+            "contenido": forms.Textarea(attrs={"class": "form-control", "placeholder": "Escribe aquí la guía paso a paso...", "rows": 15}),
+        }
+        labels = {
+            "contenido": "Contenido Detallado de la Guía",
+        }
