@@ -13,11 +13,11 @@ class Articulo(models.Model):
         return f"{self.titulo} (x{self.cantidad})"
     
 class Peticion(models.Model):
-    usuario = models.ForeignKey(User, on_delete=models.CASCADE)  # quién hizo la petición
+    usuario = models.ForeignKey(User, on_delete=models.CASCADE)  
     titulo = models.CharField(max_length=200)
     mensaje = models.TextField()
     fecha = models.DateTimeField(auto_now_add=True)
-    atendida = models.BooleanField(default=False)  # para marcar si ya se revisó
+    atendida = models.BooleanField(default=False)  
 
     def __str__(self):
         return f"{self.titulo} - {self.usuario.username}"
@@ -40,10 +40,10 @@ class Propuesta(models.Model):
 class Voto(models.Model):
     propuesta = models.ForeignKey(Propuesta, related_name="votos", on_delete=models.CASCADE)
     usuario = models.ForeignKey(User, on_delete=models.CASCADE)
-    valor = models.BooleanField()  # True = Me gusta, False = No me gusta
+    valor = models.BooleanField()  
 
     class Meta:
-        unique_together = ("propuesta", "usuario")  # un usuario solo puede votar una vez
+        unique_together = ("propuesta", "usuario")  
 
 class Tema(models.Model):
     titulo = models.CharField(max_length=200)
@@ -54,7 +54,7 @@ class Tema(models.Model):
     def __str__(self):
         return self.titulo
     
-# --- Nuevo Modelo Comentario (Comment) ---
+
 class Comentario(models.Model):
     tema = models.ForeignKey(Tema, related_name='comentarios', on_delete=models.CASCADE)
     autor = models.ForeignKey(User, on_delete=models.CASCADE)
@@ -67,4 +67,4 @@ class Comentario(models.Model):
         return f"Comentario de {self.autor.username} en {self.tema.titulo}"
     
     class Meta:
-        ordering = ['fecha_creacion'] # Ordenar comentarios por fecha de creación
+        ordering = ['fecha_creacion'] 

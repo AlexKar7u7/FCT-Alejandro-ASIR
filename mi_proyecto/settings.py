@@ -107,8 +107,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = "es"
 
-TIME_ZONE = "Europe/Madrid"   # o tu zona horaria
-
+TIME_ZONE = "Europe/Madrid"   
 USE_I18N = True
 USE_TZ = True
 
@@ -124,7 +123,7 @@ STATIC_URL = 'static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 LOGIN_URL = 'login'
-LOGIN_REDIRECT_URL = '/'        # a dónde va después de iniciar sesión
-LOGOUT_REDIRECT_URL = '/'       # a dónde va después de cerrar sesión
+LOGIN_REDIRECT_URL = '/'        
+LOGOUT_REDIRECT_URL = '/'       
 
 

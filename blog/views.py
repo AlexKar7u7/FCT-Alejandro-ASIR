@@ -12,9 +12,8 @@ from .models import Propuesta, Voto, Tema, Comentario
 from .forms import TemaForm, ComentarioForm
 
 
-# Create your views here.
 def lista_articulos(request):
-    articulos = Articulo.objects.all()  # SELECT * FROM blog_articulo
+    articulos = Articulo.objects.all()
     return render(request, 'blog/lista.html', {'articulos': articulos})
 
 def inicio(request):
@@ -23,13 +22,10 @@ def inicio(request):
 
 def lista_articulos(request):
     articulos = Articulo.objects.all()
-    # Verificar si el usuario está autenticado antes de intentar filtrar
     if request.user.is_authenticated:
         for articulo in articulos:
-            # Añade una propiedad booleana a cada artículo
             articulo.is_interesado = articulo.interesados.filter(id=request.user.id).exists()
     else:
-        # Si no está autenticado, todos los artículos no están "interesados"
         for articulo in articulos:
             articulo.is_interesado = False
             
@@ -39,9 +35,9 @@ def lista_articulos(request):
 def me_interesa(request, articulo_id):
     articulo = get_object_or_404(Articulo, id=articulo_id)
     if articulo.interesados.filter(id=request.user.id).exists():
-        articulo.interesados.remove(request.user)  # Si ya está interesado, lo elimina
+        articulo.interesados.remove(request.user)  
     else:
-        articulo.interesados.add(request.user)     # Si no está interesado, lo añade
+        articulo.interesados.add(request.user)     
     
     return redirect('lista_articulos')
 
@@ -53,7 +49,7 @@ def nueva_peticion(request):
             peticion = form.save(commit=False)
             peticion.usuario = request.user
             peticion.save()
-            return redirect("inicio")  # redirige a donde quieras
+            return redirect("inicio")  
     else:
         form = PeticionForm()
     return render(request, "blog/nueva_peticion.html", {"form": form})
@@ -109,15 +105,14 @@ def detalle_tema(request, tema_id):
     """Muestra un tema, sus comentarios de nivel superior, y el formulario para un nuevo comentario."""
     tema = get_object_or_404(Tema, id=tema_id)
     
-    # Filtramos solo los comentarios de nivel superior (aquellos sin padre)
     comentarios_principales = tema.comentarios.filter(parent__isnull=True)
     
     form = ComentarioForm()
     
     return render(request, 'blog/detalle_tema.html', {
         'tema': tema,
-        'comentarios': comentarios_principales, # Enviamos solo los comentarios principales
-        'form': form, # El formulario de comentario principal
+        'comentarios': comentarios_principales, 
+        'form': form, 
     })
 
 @login_required
@@ -131,8 +126,6 @@ def nuevo_comentario(request, tema_id):
             comentario = form.save(commit=False)
             comentario.tema = tema
             comentario.autor = request.user
-            
-            # Lógica para manejar la respuesta a otro comentario (anidamiento)
             parent_id = request.POST.get('parent_id')
             if parent_id:
                 try:
@@ -152,14 +145,12 @@ def nuevo_comentario(request, tema_id):
 def borrar_comentario(request, comentario_id):
     """Permite al usuario borrar un comentario si es el autor."""
     comentario = get_object_or_404(Comentario, id=comentario_id)
-    tema_id = comentario.tema.id  # Guardar el ID del tema para redirigir
+    tema_id = comentario.tema.id  
     
-    # 1. Verificar que el usuario es el autor del comentario
     if comentario.autor == request.user:
         comentario.delete()
         messages.success(request, "El comentario ha sido borrado con éxito.")
     else:
-        # 2. Si no es el autor, se prohíbe la acción
         messages.error(request, "No tienes permiso para borrar este comentario.")
         
     return redirect('detalle_tema', tema_id=tema_id)
