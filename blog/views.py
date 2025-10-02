@@ -180,3 +180,51 @@ def detalle_guia(request, guia_id):
     """Muestra el contenido de una guía."""
     guia = get_object_or_404(Guia, id=guia_id)
     return render(request, 'blog/detalle_guia.html', {'guia': guia})
+
+def lista_guias_oficiales(request):
+    """Muestra solo las guías creadas por administradores (is_staff)."""
+    guias_oficiales = Guia.objects.filter(autor__is_staff=True).order_by('-fecha_creacion')
+    return render(request, 'blog/lista_guias_oficiales.html', {'guias': guias_oficiales})
+
+
+@login_required
+def editar_guia(request, guia_id):
+    """Permite al autor de la guía editar su contenido."""
+    guia = get_object_or_404(Guia, id=guia_id)
+    
+    # 1. Restricción de Autoría
+    if guia.autor != request.user:
+        messages.error(request, "No tienes permiso para editar esta guía.")
+        return redirect('detalle_guia', guia_id=guia.id)
+
+    if request.method == "POST":
+        # Al editar, pasamos la instancia para que el formulario se pre-cargue y actualice
+        form = GuiaForm(request.POST, instance=guia)
+        if form.is_valid():
+            form.save()
+            # El campo ultima_modificacion se actualiza automáticamente (auto_now=True)
+            messages.success(request, "La guía ha sido actualizada con éxito.")
+            return redirect('detalle_guia', guia_id=guia.id)
+    else:
+        form = GuiaForm(instance=guia)
+    
+    return render(request, "blog/editar_guia.html", {"form": form, "guia": guia})
+
+@login_required
+def borrar_guia(request, guia_id):
+    """Permite al autor de la guía borrarla."""
+    guia = get_object_or_404(Guia, id=guia_id)
+    
+    # 1. Restricción de Autoría
+    if guia.autor != request.user:
+        messages.error(request, "No tienes permiso para borrar esta guía.")
+        return redirect('detalle_guia', guia_id=guia.id)
+
+    # 2. El borrado se procesa solo con una solicitud POST para seguridad
+    if request.method == "POST":
+        guia.delete()
+        messages.success(request, f"La guía '{guia.titulo}' ha sido eliminada.")
+        return redirect('lista_guias')
+        
+    # Si alguien intenta acceder por GET, lo redirigimos a la página de detalle
+    return redirect('detalle_guia', guia_id=guia.id)

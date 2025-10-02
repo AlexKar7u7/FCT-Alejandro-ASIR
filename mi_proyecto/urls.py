@@ -48,4 +48,7 @@ urlpatterns = [
     path("guias/", views.lista_guias, name="lista_guias"),
     path("guias/nueva/", views.nueva_guia, name="nueva_guia"),
     path("guias/<int:guia_id>/", views.detalle_guia, name="detalle_guia"),
+    path("guias/oficiales/", views.lista_guias_oficiales, name="lista_guias_oficiales"),
+    path("guias/<int:guia_id>/editar/", views.editar_guia, name="editar_guia"),
+    path("guias/<int:guia_id>/borrar/", views.borrar_guia, name="borrar_guia"),
 ]

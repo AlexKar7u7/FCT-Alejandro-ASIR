@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% block title %}Editar Guía: {{ guia.titulo }}{% endblock %}
+
+{% block content %}
+<h1 class="mb-4">Editar Guía: {{ guia.titulo }}</h1>
+
+<div class="peticion-card">
+    <p>Actualiza el contenido de tu guía.</p>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="btn btn-primary">Guardar Cambios</button>
+    </form>
+    
+    <p class="mt-3"><a href="{% url 'detalle_guia' guia.id %}">Cancelar y Volver a la Guía</a></p>
+</div>
+{% endblock %}

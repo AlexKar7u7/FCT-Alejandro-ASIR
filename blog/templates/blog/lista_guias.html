@@ -5,6 +5,10 @@
 {% block content %}
 <h1 class="mb-4">Guías de la Comunidad</h1>
 
+<p class="mb-4 text-info">
+    Estas son guías creadas por la comunidad. Si buscas las guías aprobadas y mantenidas por los administradores de la página, visita la sección de 
+    <a href="{% url 'lista_guias_oficiales' %}">Guías Oficiales</a>.
+</p>
 {% if user.is_authenticated %}
 <div class="d-flex justify-content-between mb-4">
     <a href="{% url 'nueva_guia' %}" class="btn">Crear Nueva Guía</a>

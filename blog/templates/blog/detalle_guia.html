@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load static %}
 
 {% block title %}{{ guia.titulo }}{% endblock %}
 
@@ -8,11 +9,25 @@
 <div class="guia-detail-container my-4">
     <div class="article-card mb-4">
         <h1 class="mb-3">{{ guia.titulo }}</h1>
+        
+        {% if user.is_authenticated and user == guia.autor %}
+        <div class="guia-actions mb-3">
+            <a href="{% url 'editar_guia' guia.id %}" class="btn">Editar Guía</a>
+            
+            <form action="{% url 'borrar_guia' guia.id %}" method="post" style="display:inline;">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-danger" 
+                    onclick="return confirm('¿Estás seguro de que quieres borrar la guía? Esta acción es irreversible.')">
+                    Borrar Guía
+                </button>
+            </form>
+        </div>
+        {% endif %}
         <p><small>Creada por: <strong>{{ guia.autor.username }}</strong> el {{ guia.fecha_creacion|date:"d/m/Y" }}</small></p>
         <p><small>Última actualización: {{ guia.ultima_modificacion|date:"d/m/Y H:i" }}</small></p>
         <hr>
         <div class="contenido-guia">
-            <p>{{ guia.contenido|linebreaksbr }}</p>
+            <p>{{ guia.contenido|linebreaksbr|safe }}</p> 
         </div>
     </div>
 </div>
