@@ -76,7 +76,6 @@ class Guia(models.Model):
     autor = models.ForeignKey(User, on_delete=models.CASCADE)
     contenido = models.TextField(help_text="Escribe el contenido detallado de tu guía.")
     fecha_creacion = models.DateTimeField(auto_now_add=True)
-    # auto_now=True se actualizará cada vez que la guía se guarde (útil para "rellenar")
     ultima_modificacion = models.DateTimeField(auto_now=True) 
 
     def __str__(self):
