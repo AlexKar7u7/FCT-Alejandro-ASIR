@@ -19,6 +19,12 @@ def lista_articulos(request):
 def inicio(request):
     return render(request, 'blog/inicio.html')
 
+def contacto(request):
+    return render(request, 'blog/contacto.html')
+
+def aviso_legal(request):
+    return render(request, 'blog/aviso_legal.html')
+
 
 def lista_articulos(request):
     articulos = Articulo.objects.all()

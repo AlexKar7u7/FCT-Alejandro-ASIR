@@ -25,6 +25,8 @@ urlpatterns = [
     path("articulos/", views.lista_articulos, name="lista_articulos"),
     path("articulos/<int:articulo_id>/me_interesa/", views.me_interesa, name="me_interesa"),
     path("peticion/", views.nueva_peticion, name="nueva_peticion"),
+    path("contacto/", views.contacto, name="contacto"),
+    path("aviso_legal/", views.aviso_legal, name="aviso_legal"),
 
     # login / logout
     path("login/", auth_views.LoginView.as_view(template_name="registration/login.html"), name="login"),
