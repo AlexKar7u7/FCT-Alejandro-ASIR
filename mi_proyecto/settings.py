@@ -23,10 +23,10 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-tusylwagac2pibqtza2i2_lipr66ia*km%!0d27(xcte6ih6w@'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
-ALLOWED_HOSTS = ['*']
-
+ALLOWED_HOSTS = ['*','fctalex.mgb.eus', 'www.fctalex.mgb.eus']
+CSRF_TRUSTED_ORIGINS = ['https://fctalex.mgb.eus', 'https://www.fctalex.mgb.eus']
 
 # Application definition
 
