@@ -35,6 +35,9 @@ urlpatterns = [
     # register
     path("register/", views.register, name="register"),
 
+    # perfil de usuario
+    path("perfil/", views.perfil_usuario, name="perfil_usuario"),
+
     # propuestas y votos
     path("propuestas/", views.lista_propuestas, name="lista_propuestas"),
     path("votar/<int:propuesta_id>/<int:valor>/", views.votar, name="votar"),

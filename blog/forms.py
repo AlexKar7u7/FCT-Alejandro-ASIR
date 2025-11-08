@@ -93,3 +93,47 @@ class GuiaForm(forms.ModelForm):
         labels = {
             "contenido": "Contenido Detallado de la Guía",
         }
+
+
+class UserUpdateForm(forms.ModelForm):
+    """Formulario para que el usuario pueda actualizar sus datos básicos.
+
+    Campos incluidos: username, email, first_name, last_name.
+    Se usa en el perfil para editar la cuenta del usuario autenticado.
+    """
+    username = forms.CharField(
+        label="Nombre de usuario",
+        widget=forms.TextInput(attrs={"class": "form-control"})
+    )
+    email = forms.EmailField(
+        label="Correo electrónico",
+        widget=forms.EmailInput(attrs={"class": "form-control"}),
+        required=False,
+    )
+    first_name = forms.CharField(
+        label="Nombre",
+        widget=forms.TextInput(attrs={"class": "form-control"}),
+        required=False,
+    )
+    last_name = forms.CharField(
+        label="Apellidos",
+        widget=forms.TextInput(attrs={"class": "form-control"}),
+        required=False,
+    )
+
+    class Meta:
+        model = User
+        fields = ["username", "email", "first_name", "last_name"]
+
+    def clean_username(self):
+        username = self.cleaned_data.get("username")
+        # Allow keeping the same username for the current instance.
+        if User.objects.filter(username=username).exclude(pk=self.instance.pk).exists():
+            raise forms.ValidationError("Ese nombre de usuario ya está en uso.")
+        return username
+
+    def clean_email(self):
+        email = self.cleaned_data.get("email")
+        if email and User.objects.filter(email=email).exclude(pk=self.instance.pk).exists():
+            raise forms.ValidationError("Ese correo electrónico ya está registrado.")
+        return email

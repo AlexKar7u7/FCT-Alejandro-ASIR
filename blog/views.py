@@ -4,7 +4,7 @@ from django.contrib.auth.decorators import login_required
 from .forms import PeticionForm
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import login
-from .forms import RegistroForm
+from .forms import RegistroForm, UserUpdateForm
 from django.contrib import messages
 from django.contrib import messages
 from django.shortcuts import redirect
@@ -71,6 +71,26 @@ def register(request):
     else:
         form = RegistroForm()
     return render(request, "auth/register.html", {"form": form})
+
+@login_required
+def perfil_usuario(request):
+    """Mostrar y permitir la edición del perfil del usuario autenticado.
+
+    GET: mostrar el formulario con los datos actuales.
+    POST: validar y guardar cambios, luego redirigir al mismo perfil con un mensaje.
+    """
+    if request.method == "POST":
+        form = UserUpdateForm(request.POST, instance=request.user)
+        if form.is_valid():
+            form.save()
+            messages.success(request, "Tu perfil ha sido actualizado con éxito.")
+            return redirect('perfil_usuario')
+        else:
+            messages.error(request, "Por favor corrige los errores en el formulario.")
+    else:
+        form = UserUpdateForm(instance=request.user)
+
+    return render(request, "auth/user.html", {"usuario": request.user, "form": form})
 
 
 

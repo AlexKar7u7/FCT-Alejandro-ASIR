@@ -27,7 +27,7 @@
     <!-- Right: Auth controls + Theme toggle -->
     <div class="right flex items-center space-x-3">
       {% if user.is_authenticated %}
-      <span class="hidden sm:inline">Hola, {{ user.username }}</span>
+      <a href="{% url 'perfil_usuario' %}" class="hidden sm:inline">Hola, {{ user.username }}</a>
       <form action="{% url 'logout' %}" method="post" style="display:inline;" class="frm-logout">
         {% csrf_token %}
         <button type="submit" class="nav-link">Cerrar sesión</button>

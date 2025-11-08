@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+
+{% block title %}Perfil de {{ user.username }}{% endblock %}
+
+{% block content %}
+
+<div class="container mt-4">
+	<h1>Perfil de {{ usuario.username }}</h1>
+
+	{% if messages %}
+		<div>
+			{% for message in messages %}
+				<div class="alert {% if message.tags %}alert-{{ message.tags }}{% else %}alert-info{% endif %}" role="alert">
+					{{ message }}
+				</div>
+			{% endfor %}
+		</div>
+	{% endif %}
+
+	<div class="card">
+		<div class="card-body">
+			<form method="post" novalidate>
+				{% csrf_token %}
+				{% if form %}
+					<div class="mb-3">
+						{{ form.username.label_tag }}
+						{{ form.username }}
+						{% for error in form.username.errors %}
+							<div class="text-danger small">{{ error }}</div>
+						{% endfor %}
+					</div>
+
+					<div class="mb-3">
+						{{ form.email.label_tag }}
+						{{ form.email }}
+						{% for error in form.email.errors %}
+							<div class="text-danger small">{{ error }}</div>
+						{% endfor %}
+					</div>
+
+					<div class="mb-3">
+						{{ form.first_name.label_tag }}
+						{{ form.first_name }}
+						{% for error in form.first_name.errors %}
+							<div class="text-danger small">{{ error }}</div>
+						{% endfor %}
+					</div>
+
+					<div class="mb-3">
+						{{ form.last_name.label_tag }}
+						{{ form.last_name }}
+						{% for error in form.last_name.errors %}
+							<div class="text-danger small">{{ error }}</div>
+						{% endfor %}
+					</div>
+
+					<button type="submit" class="btn btn-primary">Guardar cambios</button>
+				{% else %}
+					<p>No hay formulario disponible.</p>
+				{% endif %}
+			</form>
+		</div>
+	</div>
+</div>
+
+{% endblock %}
