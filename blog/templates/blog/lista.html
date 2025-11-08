@@ -4,15 +4,15 @@
 
 {% block content %}
     <h1>Artículos publicados</h1>
-<div class="articulos-container">
+<div class="articulos-container grid grid-cols-1 gap-6">
     {% for articulo in articulos %}
         <div class="article-card">
-            <h2>{{ articulo.titulo }}</h2>
-            <p><small>Publicado el {{ articulo.fecha_publicacion }} | Cantidad: {{ articulo.cantidad }}</small></p>
-            <p>{{ articulo.contenido }}</p>
+            <h2 class="text-lg font-semibold">{{ articulo.titulo }}</h2>
+            <p class="text-sm font-light">Publicado el {{ articulo.fecha_publicacion }} | Cantidad: {{ articulo.cantidad }}</p>
+            <p class="text-m">{{ articulo.contenido }}</p>
 
-            <div class="me-interesa-container" style="display: flex; align-items: center; gap: 10px; margin-top: 15px;">
-                <a href="{% url 'me_interesa' articulo.id %}" class="btn">
+            <div class="me-interesa-container flex items-center gap-[10px] mt-[15px]">
+                <a href="{% url 'me_interesa' articulo.id %}" class="btn {% if articulo.is_interesado %}bg-red-500 hover:bg-red-600{% else %}btn-primary{% endif %} px-3 py-1 rounded text-sm">
                     {% if articulo.is_interesado %}
                         Ya no me interesa
                     {% else %}

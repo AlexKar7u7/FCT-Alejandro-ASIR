@@ -1,0 +1,76 @@
+<div class="comentario-card mb-3 {% if nivel > 0 %}respuesta{% endif %} rounded-lg p-4 shadow-sm transition-transform duration-150 transform hover:-translate-y-1 hover:shadow-md" role="article" aria-labelledby="comentario-{{ comentario.id }}-autor">
+    <div class="flex justify-between items-center gap-3">
+        <p class="mb-0 text-sm">
+            <strong id="comentario-{{ comentario.id }}-autor">{{ comentario.autor.username }}</strong>
+            <span class="mx-1">|</span>
+            <small class="text-xs">
+                <time datetime="{{ comentario.fecha_creacion|date:'c' }}">{{ comentario.fecha_creacion|date:"d/m/Y H:i" }}</time>
+            </small>
+        </p>
+
+        <div class="flex items-center gap-2">
+            {% if user.is_authenticated %}
+                <button type="button" class="btn-reply inline-flex items-center px-2 py-1 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-offset-2" data-action="reply" data-comment-id="{{ comentario.id }}" aria-controls="form-respuesta-{{ comentario.id }}" aria-expanded="false">Responder</button>
+
+                {% if user == comentario.autor %}
+                <form action="{% url 'borrar_comentario' comentario.id %}" method="post" class="inline-block">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-link underline text-sm" 
+                        onclick="return confirm('¿Estás seguro de que quieres borrar este comentario?')">
+                        Borrar
+                    </button>
+                </form>
+                {% endif %}
+            {% endif %}
+        </div>
+    </div>
+
+    <p class="comentario-contenido mt-3 text-base">{{ comentario.contenido|linebreaksbr }}</p>
+
+    {% if user.is_authenticated %}
+    <div id="form-respuesta-{{ comentario.id }}" class="reply-form hidden mt-3" aria-hidden="true">
+        <form method="post" action="{% url 'nuevo_comentario' tema.id %}" class="peticion-card" aria-label="Formulario de respuesta" >
+            {% csrf_token %}
+            {{ form.as_p }}
+            <input type="hidden" name="parent_id" value="{{ comentario.id }}">
+            <button type="submit" class="btn btn-primary">Enviar Respuesta</button>
+        </form>
+    </div>
+    {% endif %}
+
+    {% for respuesta in comentario.respuestas.all %}
+        {% include 'blog/components/comment.html' with comentario=respuesta nivel=nivel|add:1 %}
+    {% endfor %}
+</div>
+
+{% if nivel == 0 %}
+<script>
+    // Delegated handler that toggles the Tailwind `hidden` class on reply forms.
+    document.addEventListener('click', function (event) {
+        const btn = event.target.closest('[data-action="reply"]');
+        if (!btn) return;
+
+        const commentId = btn.getAttribute('data-comment-id');
+        if (!commentId) return;
+
+        // Hide all reply forms first and reset aria-expanded
+        document.querySelectorAll('[id^="form-respuesta-"]').forEach(function (form) {
+            form.classList.add('hidden');
+            form.setAttribute('aria-hidden', 'true');
+        });
+        document.querySelectorAll('[data-action="reply"]').forEach(function (b) {
+            b.setAttribute('aria-expanded', 'false');
+        });
+
+        // Show the target form and update aria attributes
+        const target = document.getElementById('form-respuesta-' + commentId);
+        if (target) {
+            target.classList.remove('hidden');
+            target.setAttribute('aria-hidden', 'false');
+            btn.setAttribute('aria-expanded', 'true');
+            const firstInput = target.querySelector('textarea, input[type=text], input:not([type])');
+            if (firstInput) firstInput.focus();
+        }
+    });
+</script>
+{% endif %}

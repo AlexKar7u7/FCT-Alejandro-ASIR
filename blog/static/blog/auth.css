@@ -24,8 +24,7 @@ body {
 }
 
 /* Inputs */
-.login-container input[type="text"],
-.login-container input[type="password"] {
+.login-container input {
     width: 100%;
     padding: 12px;
     margin: 8px 0 15px 0;
@@ -70,4 +69,11 @@ body {
 
 .login-container a:hover {
     text-decoration: underline;
+}
+
+.login-container ul {
+    color: red;
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
 }

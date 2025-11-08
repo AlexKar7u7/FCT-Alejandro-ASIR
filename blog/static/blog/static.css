@@ -85,7 +85,6 @@ button, .btn {
     color: white;
     border: none;
     padding: 10px 20px;
-    margin: 5px;
     border-radius: 5px;
     cursor: pointer;
     transition: 0.3s;
@@ -96,19 +95,12 @@ button:hover, .btn:hover {
 }
 
 /* Formularios */
-form {
-    background: var(--form-bg);
-    padding: 20px;
-    margin: 20px auto;
-    border-radius: 10px;
-    box-shadow: 0px 4px 6px rgba(0,0,0,0.1);
-    max-width: 400px;
-}
+
 
 form input, form select, form textarea {
     width: 100%;
     padding: 10px;
-    margin: 10px 0;
+    margin: 10px;
     border: 1px solid #ccc;
     border-radius: 5px;
     background: var(--card-bg);
@@ -270,5 +262,30 @@ header nav form {
     padding: 0;
     display: inline;
 }
+
+
+/* ==============================
+   COMMENT COMPONENT COLORS ONLY
+   Keep color-related variables here; layout, spacing and interaction
+   should be implemented with Tailwind utility classes in the template.
+==================================*/
+
+.comentario-card {
+    /* only colour tokens here; spacing/box-shadow handled by Tailwind classes */
+    background-color: var(--card-bg, #f5f5f5);
+    color: var(--text-color);
+}
+
+.comentario-card.respuesta {
+    /* visual hint for replies (border colour only) */
+    border-left: 3px solid rgba(0,0,0,0.06);
+}
+
+.comentario-contenido {
+    /* keep text colour consistent for content rendered without Tailwind */
+    color: var(--text-color);
+    white-space: pre-wrap; /* preserve line breaks from the content */
+}
+
 
 

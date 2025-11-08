@@ -20,7 +20,7 @@
     <div class="comentarios-list mb-5">
         
         {% for comentario in comentarios %}
-            {% include 'blog/comentario_individual.html' with comentario=comentario nivel=0 %}
+            {% include 'blog/components/comment.html' with comentario=comentario nivel=0 %}
         {% empty %}
             <p>Sé el primero en comentar este tema.</p>
         {% endfor %}

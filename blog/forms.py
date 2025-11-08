@@ -39,6 +39,10 @@ class RegistroForm(UserCreationForm):
         label="Nombre de usuario",
         widget=forms.TextInput(attrs={"class": "form-control"})
     )
+    email = forms.EmailField(
+        label="Correo electrónico",
+        widget=forms.EmailInput(attrs={"class": "form-control"})
+    )
     password1 = forms.CharField(
         label="Contraseña",
         widget=forms.PasswordInput(attrs={"class": "form-control"})
@@ -50,13 +54,25 @@ class RegistroForm(UserCreationForm):
 
     class Meta:
         model = User
-        fields = ["username", "password1", "password2"]
+        fields = ["username", "email", "password1", "password2"]
+    
+    def empty_username(self):
+        username = self.cleaned_data.get("username")
+        if not username:
+            raise forms.ValidationError("El nombre de usuario no puede estar vacío.")
+        return username
 
     def clean_username(self):
         username = self.cleaned_data.get("username")
         if User.objects.filter(username=username).exists():
             raise forms.ValidationError("Ese nombre de usuario ya está en uso.")
         return username
+    
+    def clean_email(self):
+        email = self.cleaned_data.get("email")
+        if User.objects.filter(email=email).exists():
+            raise forms.ValidationError("Ese correo electrónico ya está registrado.")
+        return email
 
     def clean_password2(self):
         password1 = self.cleaned_data.get("password1")

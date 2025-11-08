@@ -16,9 +16,9 @@
       <p class="error">Usuario o contraseña incorrectos.</p>
     {% endif %}
 
-    <form method="post">
+    <form method="post" class="p-[20px] m-[20px] r-[10px] shadow-md max-w-[400px]">
       {% csrf_token %}
-      {{ form.as_p }}
+      {{ form }}
       <button type="submit">Entrar</button>
     </form>
     <p>¿No tienes cuenta? <a href="{% url 'register' %}">Crea tu cuenta aquí</a>.</p>
