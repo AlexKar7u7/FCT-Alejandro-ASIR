@@ -3,108 +3,63 @@
 
 {% block content %}
 <div class="hero d-flex align-items-center justify-content-center">
-  <div class="text-center text-white">
+  <div class="text-center text-gray-100 dark:text-gray-900">
     <h1 class="mb-3">Bienvenido a GS Storm</h1>
-    
-    <p class="lead mb-4">
-        GS Storm es tu **centro interactivo** para la comunidad y la información técnica. Aquí no solo encontrarás **artículos** y **guías** detalladas creadas por la comunidad y el equipo administrativo, sino que también podrás influir activamente en el contenido y la dirección del sitio.
-        Participa en el **Foro** creando temas y respondiendo comentarios, emite tu **voto** en las propuestas de la administración, o envíanos una **petición directa** con tus sugerencias o consultas.
-    </p>
+  </div>
+  <p class="lead mb-4 text-gray-100 dark:text-gray-700">
+    GS Storm es tu **centro interactivo** para la comunidad y la información técnica. Aquí no solo encontrarás **artículos** y **guías** detalladas creadas por la comunidad y el equipo administrativo, sino que también podrás influir activamente en el contenido y la dirección del sitio.
+    Participa en el **Foro** creando temas y respondiendo comentarios, emite tu **voto** en las propuestas de la administración, o envíanos una **petición directa** con tus sugerencias o consultas.
+  </p>
 
-    <h1 class="mb-3">¿Te interesa alguno de nuestros productos? ¡<a href="{% url 'contacto' %}">Contáctanos</a>, haz una reserva y consíguelo en alguna de nuestras tiendas!</h1>
-    </div>
+  <h1 class="mb-3 text-gray-900 dark:text-gray-100">¿Te interesa alguno de nuestros productos? ¡<a href="{% url 'contacto' %}">Contáctanos</a>, haz una reserva y consíguelo en alguna de nuestras tiendas!</h1>
+    
 </div>
 
 <div class="container my-5">
 
-  <h2 class="text-center mb-5">Nuestras Secciones y Funcionalidades</h2>
-  
-  <div class="row text-center">
-    
-    <div class="col-md-4 mb-4">
-      <div class="card shadow border-0 h-100">
-        <div class="card-body">
-          <div class="mb-3">
-            <i class="bi bi-book" style="font-size: 2rem; color: #1abc9c;"></i>
-          </div>
-          <h5 class="card-title">Artículos y Guías</h5>
-          <p class="card-text">Explora nuestra colección de **Artículos** de interés y accede a las **Guías** dinámicas creadas por usuarios (con opciones de edición) o las **Guías Estáticas** oficiales del Staff.</p>
-        </div>
-      </div>
+  <h2 class="text-center mb-5 text-gray-900 dark:text-gray-100">Nuestras Secciones y Funcionalidades</h2>
+
+  {# Features grid: responsive Tailwind grid — falls back to single column on very small screens #}
+  <div class="grid gap-6 text-center place-items-stretch justify-center mx-auto" style="grid-template-columns: repeat(auto-fit, minmax(200px, 250px));">
+
+    <div class="w-full">
+      {% include 'blog/components/card.html' with extra_classes='w-full' icon='bi bi-book' icon_color_class='text-teal-400' icon_size_class='text-2xl' title='Artículos y Guías' text='Explora nuestra colección de Artículos de interés y accede a las Guías dinámicas creadas por usuarios (con opciones de edición) o las Guías Estáticas oficiales del Staff.' %}
     </div>
-    
-    <div class="col-md-4 mb-4">
-      <div class="card shadow border-0 h-100">
-        <div class="card-body">
-          <div class="mb-3">
-            <i class="bi bi-chat-dots" style="font-size: 2rem; color: #3498db;"></i>
-          </div>
-          <h5 class="card-title">Foro de Discusión</h5>
-          <p class="card-text">Crea **Temas** de debate, comparte tus ideas y responde a los comentarios de otros usuarios en un sistema de discusión con respuestas anidadas.</p>
-        </div>
-      </div>
+
+    <div class="w-full">
+      {% include 'blog/components/card.html' with extra_classes='w-full' icon='bi bi-chat-dots' icon_color_class='text-blue-400' icon_size_class='text-2xl' title='Foro de Discusión' text='Crea Temas de debate, comparte tus ideas y responde a los comentarios de otros usuarios en un sistema de discusión con respuestas anidadas.' %}
     </div>
-    
-    <div class="col-md-4 mb-4">
-      <div class="card shadow border-0 h-100">
-        <div class="card-body">
-          <div class="mb-3">
-            <i class="bi bi-lightbulb" style="font-size: 2rem; color: #f39c12;"></i>
-          </div>
-          <h5 class="card-title">Propuestas y Peticiones</h5>
-          <p class="card-text">Vota en las **Propuestas** de la Administración para dar tu opinión, o envía una **Petición** privada al equipo para consultas o soporte comercial.</p>
-        </div>
-      </div>
+
+    <div class="w-full">
+      {% include 'blog/components/card.html' with extra_classes='w-full' icon='bi bi-lightbulb' icon_color_class='text-orange-400' icon_size_class='text-2xl' title='Propuestas y Peticiones' text='Vota en las Propuestas de la Administración para dar tu opinión, o envía una Petición privada al equipo para consultas o soporte comercial.' %}
     </div>
-    
+
   </div>
   
-  <h2 class="text-center mb-5 mt-5">Roles y Participación</h2>
-  <div class="row text-center">
-    
-    <div class="col-md-4 mb-4">
-      <div class="card shadow border-0 h-100">
-        <div class="card-body">
-          <div class="mb-3">
-            <i class="bi bi-shield-lock" style="font-size: 2rem; color: #0d6efd;"></i>
-          </div>
-          <h5 class="card-title">Administradores</h5>
-          <p class="card-text">Gestionan propuestas y artículos, crean las Guías Oficiales y atienden las Peticiones de los usuarios.</p>
-        </div>
-      </div>
+  <h2 class="text-center mb-5 mt-5 text-gray-900 dark:text-gray-100">Roles y Participación</h2>
+
+  <div class="grid gap-6 text-center place-items-stretch justify-center mx-auto" style="grid-template-columns: repeat(auto-fit, minmax(200px, 250px));">
+
+    <div class="w-full">
+      {% include 'blog/components/card.html' with extra_classes='w-full' icon='bi bi-shield-lock' icon_color_class='text-blue-600' icon_size_class='text-2xl' title='Administradores' text='Gestionan propuestas y artículos, crean las Guías Oficiales y atienden las Peticiones de los usuarios.' %}
     </div>
 
-    <div class="col-md-4 mb-4">
-      <div class="card shadow border-0 h-100">
-        <div class="card-body">
-          <div class="mb-3">
-            <i class="bi bi-people" style="font-size: 2rem; color: #198754;"></i>
-          </div>
-          <h5 class="card-title">Usuarios</h5>
-          <p class="card-text">Registrándote, podrás votar en propuestas, crear, editar o borrar tus propias Guías y Temas en el Foro.</p>
-        </div>
-      </div>
+    <div class="w-full">
+      {% include 'blog/components/card.html' with extra_classes='w-full' icon='bi bi-people' icon_color_class='text-green-600' icon_size_class='text-2xl' title='Usuarios' text='Registrándote, podrás votar en propuestas, crear, editar o borrar tus propias Guías y Temas en el Foro.' %}
     </div>
 
-    <div class="col-md-4 mb-4">
-      <div class="card shadow border-0 h-100">
-        <div class="card-body">
-          <div class="mb-3">
-            <i class="bi bi-hand-thumbs-up" style="font-size: 2rem; color: #ffc107;"></i>
-          </div>
-          <h5 class="card-title">Intereses y Votos</h5>
-          <p class="card-text">Marca artículos como "Me Interesa", y emite un voto único (positivo o negativo) en las Propuestas de la Administración.</p>
-        </div>
-      </div>
+    <div class="w-full">
+      {% include 'blog/components/card.html' with extra_classes='w-full' icon='bi bi-hand-thumbs-up' icon_color_class='text-yellow-400' icon_size_class='text-2xl' title='Intereses y Votos' text='Marca artículos como "Me Interesa", y emite un voto único (positivo o negativo) en las Propuestas de la Administración.' %}
     </div>
+
   </div>
 
   <div class="card shadow border-0 mt-5">
-    <div class="card-body text-center">
+    <div class="card-body text-center text-gray-800 dark:text-gray-200">
       <div class="mb-3">
         <i class="bi bi-info-circle" style="font-size: 2rem; color: #6c757d;"></i>
       </div>
-      <h5 class="card-title">Condiciones Generales</h5>
+      <h5 class="card-title text-gray-900 dark:text-gray-100">Condiciones Generales</h5>
       <ul class="list-unstyled mt-3">
         <li>• Solo usuarios registrados pueden votar propuestas, crear temas o publicar guías.</li>
         <li>• Cada usuario puede editar y borrar el contenido que ha creado.</li>
