@@ -3,21 +3,21 @@
 
 {% block content %}
 <div class="hero d-flex align-items-center justify-content-center">
-  <div class="text-center text-gray-100 dark:text-gray-900">
+  <div class="text-center">
     <h1 class="mb-3">Bienvenido a GS Storm</h1>
   </div>
-  <p class="lead mb-4 text-gray-100 dark:text-gray-700">
+  <p class="lead mb-4 ">
     GS Storm es tu **centro interactivo** para la comunidad y la información técnica. Aquí no solo encontrarás **artículos** y **guías** detalladas creadas por la comunidad y el equipo administrativo, sino que también podrás influir activamente en el contenido y la dirección del sitio.
     Participa en el **Foro** creando temas y respondiendo comentarios, emite tu **voto** en las propuestas de la administración, o envíanos una **petición directa** con tus sugerencias o consultas.
   </p>
 
-  <h1 class="mb-3 text-gray-900 dark:text-gray-100">¿Te interesa alguno de nuestros productos? ¡<a href="{% url 'contacto' %}">Contáctanos</a>, haz una reserva y consíguelo en alguna de nuestras tiendas!</h1>
+  <h1 class="mb-3">¿Te interesa alguno de nuestros productos? ¡<a href="{% url 'contacto' %}">Contáctanos</a>, haz una reserva y consíguelo en alguna de nuestras tiendas!</h1>
     
 </div>
 
 <div class="container my-5">
 
-  <h2 class="text-center mb-5 text-gray-900 dark:text-gray-100">Nuestras Secciones y Funcionalidades</h2>
+  <h2 class="text-center mb-5">Nuestras Secciones y Funcionalidades</h2>
 
   {# Features grid: responsive Tailwind grid — falls back to single column on very small screens #}
   <div class="grid gap-6 text-center place-items-stretch justify-center mx-auto" style="grid-template-columns: repeat(auto-fit, minmax(200px, 250px));">
@@ -35,8 +35,8 @@
     </div>
 
   </div>
-  
-  <h2 class="text-center mb-5 mt-5 text-gray-900 dark:text-gray-100">Roles y Participación</h2>
+
+  <h2 class="text-center mb-5 mt-5">Roles y Participación</h2>
 
   <div class="grid gap-6 text-center place-items-stretch justify-center mx-auto" style="grid-template-columns: repeat(auto-fit, minmax(200px, 250px));">
 
@@ -54,12 +54,12 @@
 
   </div>
 
-  <div class="card shadow border-0 mt-5">
-    <div class="card-body text-center text-gray-800 dark:text-gray-200">
+  <div class="card shadow border-0 mt-5" style="background-color: var(--card-bg);">
+    <div class="card-body text-center">
       <div class="mb-3">
         <i class="bi bi-info-circle" style="font-size: 2rem; color: #6c757d;"></i>
       </div>
-      <h5 class="card-title text-gray-900 dark:text-gray-100">Condiciones Generales</h5>
+      <h5 class="card-title">Condiciones Generales</h5>
       <ul class="list-unstyled mt-3">
         <li>• Solo usuarios registrados pueden votar propuestas, crear temas o publicar guías.</li>
         <li>• Cada usuario puede editar y borrar el contenido que ha creado.</li>

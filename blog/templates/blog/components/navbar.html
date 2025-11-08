@@ -1,0 +1,42 @@
+{% load static %}
+<header>
+  <nav class="flex items-center justify-between p-4 w-full">
+    <!-- Left: Icon + Site Name -->
+    <div class="left flex items-center space-x-3">
+      <a href="{% url 'inicio' %}" class="inline-flex items-center">
+        <img src="{% static 'blog/icono.webp' %}" alt="Icono del Sitio" class="nav-icon">
+        <span class="ml-2 font-semibold text-lg">GS Storm</span>
+      </a>
+    </div>
+
+    <!-- Middle: Links (centered). Show Admin link only for staff -->
+    <div class="middle flex-1 flex justify-center">
+      <div class="space-x-3">
+        <a href="{% url 'inicio' %}">Inicio</a>
+        <a href="{% url 'lista_articulos' %}">Artículos</a>
+        <a href="{% url 'nueva_peticion' %}">Solicitar Petición</a>
+        <a href="{% url 'lista_propuestas' %}">Lista Propuestas</a>
+        <a href="{% url 'lista_temas' %}">Foro</a>
+        <a href="{% url 'lista_guias' %}">Guías</a>
+        {% if user.is_staff %}
+        <a href="/admin/">Admin</a>
+        {% endif %}
+      </div>
+    </div>
+
+    <!-- Right: Auth controls + Theme toggle -->
+    <div class="right flex items-center space-x-3">
+      {% if user.is_authenticated %}
+      <span class="hidden sm:inline">Hola, {{ user.username }}</span>
+      <form action="{% url 'logout' %}" method="post" style="display:inline;" class="frm-logout">
+        {% csrf_token %}
+        <button type="submit" class="nav-link">Cerrar sesión</button>
+      </form>
+      {% else %}
+      <a href="{% url 'login' %}">Iniciar sesión</a>
+      {% endif %}
+
+      <button id="theme-toggle" class="btn btn-link nav-link" aria-label="Toggle theme">🌙</button>
+    </div>
+  </nav>
+</header>

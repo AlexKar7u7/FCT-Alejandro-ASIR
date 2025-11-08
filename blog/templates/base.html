@@ -25,40 +25,7 @@
 </head>
 
 <body>
-  <header>
-    <nav class="flex items-center justify-between p-4">
-      <div class="nav-left flex items-center">
-        <a href="{% url 'inicio' %}" class="nav-icon-link inline-flex items-center">
-          <img src="{% static 'blog/icono.webp' %}" alt="Icono del Sitio" class="nav-icon">
-        </a>
-        <div class="ml-3 space-x-3">
-          <a href="{% url 'inicio' %}">Inicio</a>
-          <a href="{% url 'lista_articulos' %}">Artículos</a>
-          <a href="{% url 'nueva_peticion' %}">Solicitar Petición</a>
-          <a href="{% url 'lista_propuestas' %}">Lista Propuestas</a>
-          <a href="{% url 'lista_temas' %}">Foro</a>
-          <a href="{% url 'lista_guias' %}">Guías</a>
-        </div>
-      </div>
-
-      <div class="nav-right flex items-center space-x-3">
-        {% if user.is_authenticated %}
-        <span>Hola, {{ user.username }}</span>
-        {% if user.is_staff %}
-        <a href="/admin/">Ir al Admin</a>
-        {% endif %}
-        <form action="{% url 'logout' %}" method="post" style="display:inline;" class="frm-logout">
-          {% csrf_token %}
-          <button type="submit" class="nav-link">Cerrar sesión</button>
-        </form>
-        {% else %}
-        <a href="{% url 'login' %}">Iniciar sesión</a>
-        {% endif %}
-
-        <button id="theme-toggle" class="btn btn-link nav-link" aria-label="Toggle theme">🌙</button>
-      </div>
-    </nav>
-  </header>
+  {% include 'blog/components/navbar.html' %}
 
   <main>
     {% block content %}{% endblock %}
