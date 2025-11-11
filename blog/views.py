@@ -17,7 +17,7 @@ def lista_articulos(request):
     return render(request, 'blog/lista.html', {'articulos': articulos})
 
 def inicio(request):
-    return render(request, 'blog/inicio.html')
+    return render(request, 'blog/index.html')
 
 def contacto(request):
     return render(request, 'blog/contacto.html')
