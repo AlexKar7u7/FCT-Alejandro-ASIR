@@ -11,11 +11,6 @@ from django.shortcuts import redirect
 from .models import Propuesta, Voto, Tema, Comentario, Guia
 from .forms import TemaForm, ComentarioForm, GuiaForm
 
-
-def lista_articulos(request):
-    articulos = Articulo.objects.all()
-    return render(request, 'blog/lista.html', {'articulos': articulos})
-
 def inicio(request):
     return render(request, 'blog/index.html')
 

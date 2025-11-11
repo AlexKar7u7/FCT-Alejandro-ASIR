@@ -205,3 +205,8 @@ static/
 ---
 
 If you want any of the quick wins implemented as a small PR or patch (CSS scaffold, HTMX fragment, or styleguide), tell me which one and I'll prepare the changes. No code has been modified in the repository yet.
+
+
+def lista_articulos(request):
+    articulos = Articulo.objects.all()
+    return render(request, 'blog/lista.html', {'articulos': articulos})
